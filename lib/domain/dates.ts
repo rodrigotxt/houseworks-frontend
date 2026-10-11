@@ -93,17 +93,6 @@ export function formatInstant(iso: string, timeZone: string): string {
   }).format(new Date(iso));
 }
 
-export function formatHours(hours: number): string {
-  const absoluto = Math.abs(hours);
-  const sinal = hours < 0 ? 'antes do prazo' : 'depois do prazo';
-
-  if (absoluto < 1) return 'no prazo';
-  if (absoluto < 24) return Math.round(absoluto) + 'h ' + sinal;
-
-  const dias = Math.round(absoluto / 24);
-  return dias + (dias === 1 ? ' dia ' : ' dias ') + sinal;
-}
-
 /** 'Hoje', 'Amanhã', '3 dias atrasada' — o rotulo que a agenda usa. */
 export function relativeDueLabel(dueDate: string, today: string): string {
   const diferenca = daysBetween(today, dueDate);
