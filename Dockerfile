@@ -1,10 +1,14 @@
-FROM node:18-alpine
+# Runtime alinhado com a API (node:22-alpine). O Node 18 esta fora de suporte desde
+# abril de 2025.
+FROM node:22-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+# npm ci (e nao npm install) porque o package-lock.json esta versionado: a instalacao
+# fica reproduzivel e falha alto se o lock sair de sincronia com o package.json.
+RUN npm ci
 
 COPY . .
 
