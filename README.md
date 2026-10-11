@@ -1,3 +1,13 @@
+> ## ⚠️ Este repositório foi incorporado a um monorepo
+>
+> O frontend agora vive em [`houseworks-app/frontend/`](https://github.com/rodrigotxt/houseworks-app/tree/main/frontend),
+> no mesmo repositório da API e do contrato OpenAPI de onde estes tipos são gerados. Este
+> repositório está **arquivado** e não recebe mais commits; o histórico foi preservado com
+> `git subtree`.
+>
+> Motivo: o Komodo (e qualquer deploy que clone um repositório por stack) não tem o repositório
+> irmão ao lado, então `../houseworks-frontend` não resolvia. Ver **D22** em
+> [`docs/DECISIONS.md`](https://github.com/rodrigotxt/houseworks-app/blob/main/docs/DECISIONS.md).
 # HouseWorks — frontend
 
 A interface do HouseWorks: as tarefas da casa, a agenda e o placar.
