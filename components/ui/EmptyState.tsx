@@ -10,9 +10,17 @@ interface EmptyStateProps {
   description?: string;
   actionLabel?: string;
   onAction?: () => void;
+  /** Preferível a onAction quando a ação é navegar: vira um link de verdade. */
+  actionHref?: string;
 }
 
-export default function EmptyState({ title, description, actionLabel, onAction }: EmptyStateProps) {
+export default function EmptyState({
+  title,
+  description,
+  actionLabel,
+  onAction,
+  actionHref,
+}: EmptyStateProps) {
   return (
     <Box
       sx={{
@@ -31,8 +39,10 @@ export default function EmptyState({ title, description, actionLabel, onAction }
           {description}
         </Typography>
       )}
-      {actionLabel && onAction && (
-        <Button variant="contained" onClick={onAction}>{actionLabel}</Button>
+      {actionLabel && (actionHref || onAction) && (
+        <Button variant="contained" href={actionHref} onClick={onAction}>
+          {actionLabel}
+        </Button>
       )}
     </Box>
   );
