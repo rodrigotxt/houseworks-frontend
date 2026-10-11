@@ -12,7 +12,7 @@ import TaskForm from '@/components/tasks/TaskForm';
 import { updateTask } from '@/app/(app)/tasks/actions';
 import { isApiError } from '@/lib/domain/api';
 import { canEditTask } from '@/lib/domain/rules';
-import { requireContext, serverApi } from '@/lib/session/server';
+import { getHousehold, requireContext, serverApi } from '@/lib/session/server';
 
 export const metadata: Metadata = { title: 'Editar tarefa' };
 
@@ -31,7 +31,7 @@ export default async function EditTaskPage({
   try {
     const [tarefa, household, members] = await Promise.all([
       api.tasks.get(taskId),
-      api.households.get(householdId),
+      getHousehold(householdId),
       api.households.listMembers(householdId),
     ]);
 

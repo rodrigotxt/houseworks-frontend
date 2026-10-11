@@ -4,6 +4,8 @@
 
 import type { Metadata, Viewport } from 'next';
 
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
+
 import ServiceWorkerRegistrar from '@/components/pwa/ServiceWorkerRegistrar';
 import Providers from '@/components/ui/Providers';
 import './globals.css';
@@ -30,8 +32,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    // suppressHydrationWarning: o script abaixo escreve o atributo de tema no <html> antes
+    // de o React hidratar, e sem isto o React reclamaria da diferença.
+    <html lang="pt-BR" suppressHydrationWarning>
       <body>
+        {/*
+          Roda ANTES da primeira pintura e escreve o tema escolhido no <html>.
+          Sem ele o servidor manda claro (não tem como saber a preferência do sistema), o
+          navegador pinta claro e só depois o React troca para escuro — que é exatamente a
+          piscada. São ~2KB inline e resolve o problema na raiz.
+        */}
+        <InitColorSchemeScript defaultMode="system" />
+
         <Providers>{children}</Providers>
         {/* Torna o app instalável no celular. Não renderiza nada. */}
         <ServiceWorkerRegistrar />

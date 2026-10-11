@@ -13,7 +13,7 @@ import TaskForm from '@/components/tasks/TaskForm';
 import { createTask } from '@/app/(app)/tasks/actions';
 import { canCreateTask } from '@/lib/domain/rules';
 import { findMembership } from '@/lib/domain/rules';
-import { requireContext, serverApi } from '@/lib/session/server';
+import { getHousehold, requireContext, serverApi } from '@/lib/session/server';
 
 export const metadata: Metadata = { title: 'Nova tarefa' };
 
@@ -25,7 +25,7 @@ export default async function NewTaskPage() {
 
   const api = await serverApi();
   const [household, members] = await Promise.all([
-    api.households.get(householdId),
+    getHousehold(householdId),
     api.households.listMembers(householdId),
   ]);
 

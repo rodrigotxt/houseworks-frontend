@@ -9,12 +9,12 @@ import { headers } from 'next/headers';
 
 import AppShell from '@/components/shells/AppShell';
 import { deviceFromUserAgent } from '@/lib/device/profile';
-import { requireContext, serverApi } from '@/lib/session/server';
+import { getHousehold, requireContext } from '@/lib/session/server';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const { session, householdId } = await requireContext();
 
-  const household = await (await serverApi()).households.get(householdId);
+  const household = await getHousehold(householdId);
   const userAgent = (await headers()).get('user-agent');
 
   return (

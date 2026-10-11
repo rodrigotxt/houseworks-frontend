@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 
 import PageHeader from '@/components/ui/PageHeader';
 import EmptyState from '@/components/ui/EmptyState';
-import { requireContext, serverApi } from '@/lib/session/server';
+import { getHousehold, requireContext, serverApi } from '@/lib/session/server';
 import { defaultWindow } from '@/lib/domain/dates';
 
 export const metadata: Metadata = { title: 'Cronograma' };
@@ -17,7 +17,7 @@ export default async function SchedulePage() {
   const api = await serverApi();
 
   // Só para já exercitar a chamada e conseguir dizer quantas tarefas o dia tem.
-  const household = await api.households.get(householdId);
+  const household = await getHousehold(householdId);
   const janela = defaultWindow(household);
   const { meta } = await api.occurrences.list(householdId, { ...janela, pageSize: 1 });
 
