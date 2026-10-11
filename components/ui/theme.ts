@@ -17,6 +17,21 @@ export const BREAKPOINTS = {
 } as const;
 
 export const appTheme = createTheme({
+  /**
+   * `cssVariables` é o que faz o tema escuro EXISTIR EM CSS.
+   *
+   * Sem ele, o MUI gera um tema claro com cores fixas (`--AppBar-background:#f5f5f5`) e o
+   * esquema escuro só passa a existir quando o JavaScript roda — ou seja, a página pinta
+   * clara e troca depois. Era essa a piscada: o script anti-flash acertava o atributo no
+   * <html>, mas não havia CSS nenhum para ele ativar.
+   *
+   * Com as variáveis ligadas, o servidor manda os dois esquemas no CSS e o atributo
+   * `data-mui-color-scheme` escolhe entre eles sem depender de JavaScript.
+   */
+  cssVariables: {
+    colorSchemeSelector: 'data-mui-color-scheme',
+  },
+
   colorSchemes: {
     light: {
       palette: {
